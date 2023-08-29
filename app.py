@@ -1,4 +1,28 @@
 #https://www.youtube.com/watch?v=J8TgKxomS2g&list=PLJ2B8JjHcDrtwVskUQbhuDPqjh2cSwr5U&index=4&ab_channel=Streamlit
+import requests
+import importlib.util
+
+# URL of the Python module
+module_url = "https://raw.githubusercontent.com/username/repo/main/replicate.py"
+
+# Make an HTTP GET request to fetch the module code
+response = requests.get(module_url)
+module_code = response.text
+
+# Create a new module object
+module_spec = importlib.util.spec_from_loader("replicate", loader=None)
+module = importlib.util.module_from_spec(module_spec)
+
+# Execute the fetched code in the module's namespace
+exec(module_code, module.__dict__)
+
+# Now you can use the module's functions and variables
+from replicate import module_function
+
+# Use functions or variables from the module
+result = module.module_function()
+ 
+
 import streamlit as st
 import replicate
 import os
